@@ -1,0 +1,1 @@
+export default (str) => str.replace(/([A-Z])/g, (u) => "-" + u.toLowerCase())

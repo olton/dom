@@ -1,0 +1,1 @@
+export default (str, sep = " ") => str.split(sep).map((el) => (""+el).trim()).filter((el) => el)

@@ -1,0 +1,1 @@
+export default (o) => o instanceof Object && 'length' in o

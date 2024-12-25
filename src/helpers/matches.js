@@ -1,0 +1,1 @@
+export default Element.prototype.matches

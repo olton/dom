@@ -1,0 +1,43 @@
+{
+  "name": "@olton/dom",
+  "title": "Dom",
+  "version": "0.0.1",
+  "description": "JavaScript library for work with DOM elements",
+  "main": "dist/dom.js",
+  "type": "module",
+  "homepage": "https://github.com/olton/dom",
+  "author": {
+    "name": "Serhii Pimenov",
+    "url": "https://pimenov.com.ua",
+    "email": "serhii@pimenov.com.ua"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/olton/dom.git"
+  },
+  "bugs": {
+    "url": "https://github.com/olton/dom/issues"
+  },
+  "license": "MIT",
+  "keywords": [
+    "dom",
+    "manipulation",
+    "js",
+    "javascript"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist/* lib/*",
+    "build": "npm run clean && cross-env MODE=production node build.js",
+    "dev": "npm run clean && cross-env MODE=development node build.js",
+    "test": "easytest --dom --verbose",
+    "pub": "npm run build && npm publish --access public"
+  },
+  "private": false,
+  "devDependencies": {
+    "@olton/easytest": "^0.40.0",
+    "@olton/esbuild-plugin-progress": "^0.3.0",
+    "cross-env": "^7.0.3",
+    "esbuild": "^0.24.0",
+    "esbuild-plugin-replace": "^1.4.0"
+  }
+}
