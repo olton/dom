@@ -4,7 +4,7 @@ Dom is a small library for work with HTML elements.
 This library is designed for [Metro UI](https://metroui.org.ua) project to replace jQuery.
  
 #### Status
-![Version](https://img.shields.io/npm/v/dom)
+![NPM Version](https://img.shields.io/npm/v/%40olton%2Fdom)
 ![Version](https://img.shields.io/github/package-json/v/olton/dom)
 [![develop Status](https://img.shields.io/badge/status-release-darklime.svg)](https://david-dm.org/olton/dom)
 [![Dependencies](https://img.shields.io/badge/Dependencies-none-darklime.svg?style=flat)](https://github.com/olton/dom/blob/master/LICENSE)
