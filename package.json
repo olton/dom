@@ -1,19 +1,15 @@
 {
-  "name": "m4q",
-  "title": "m4q",
-  "description": "Helper for DOM manipulation, animation, and ajax routines. JQuery replacer.",
-  "version": "3.2.0",
-  "main": "dist/m4q.esm.js",
-  "export": {
-    "import": "./dist/m4q.esm.js",
-    "require": "./dist/m4q.cjs.js"
-  },
+  "name": "@olton/dom",
+  "title": "Dom",
+  "description": "DOM - Work with HTML elements, animation HTML elements and props, and ajax routines. JQuery replacer.",
+  "version": "1.0.0",
+  "main": "dist/dom.js",
   "type": "module",
-  "types": "ts/m4q.d.ts",
+  "types": "ts/dom.d.ts",
   "files": [
     "dist"
   ],
-  "homepage": "https://metroui.org.ua/m4q-about.html",
+  "homepage": "https://metroui.org.ua/",
   "author": {
     "name": "Serhii Pimenov",
     "url": "https://pimenov.com.ua",
@@ -21,20 +17,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/olton/m4q.git"
+    "url": "https://github.com/olton/dom.git"
   },
   "keywords": [
-    "metro4",
-    "m4q",
+    "metroui",
     "javascript",
     "browser",
     "library",
     "dom",
     "animation",
-    "jquery"
+    "replace jquery"
   ],
   "bugs": {
-    "url": "https://github.com/olton/m4q/issues"
+    "url": "https://github.com/olton/dom/issues"
   },
   "license": "MIT",
   "scripts": {
