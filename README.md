@@ -12,7 +12,7 @@ This library is designed for [Metro UI](https://metroui.org.ua) project to repla
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)](https://github.com/olton/dom/blob/master/LICENSE)
 
 ## Documentation
-Read about `Dom` usage in the [Metro 4 docs](https://metroui.org.ua/)
+Read about `Dom` usage in the [Metro UI](https://metroui.org.ua/) documentation.
 
 
 ### Credits
