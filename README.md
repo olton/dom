@@ -1,19 +1,18 @@
-# m4q - DOM manipulation helper and JQuery replacer
+# DOM – Simple library for HTML elements manipulating and animating and JQuery replacer
 
-The m4q is a small library for DOM manipulation. 
-This helper designed for [Metro UI](https://metroui.org.ua) project to replace jQuery.
-m4q is not a complete jQuery equivalent, and there are differences.
+Dom is a small library for work with HTML elements. 
+This library is designed for [Metro UI](https://metroui.org.ua) project to replace jQuery.
  
 #### Status
-![Version](https://img.shields.io/npm/v/m4q)
-![Version](https://img.shields.io/github/package-json/v/olton/m4q)
-[![develop Status](https://img.shields.io/badge/status-release-darklime.svg)](https://david-dm.org/olton/m4q)
-[![Dependencies](https://img.shields.io/badge/Dependencies-none-darklime.svg?style=flat)](https://github.com/olton/m4q/blob/master/LICENSE)
-![Minified Size](https://img.shields.io/bundlejs/size/m4q)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)](https://github.com/olton/m4q/blob/master/LICENSE)
+![Version](https://img.shields.io/npm/v/dom)
+![Version](https://img.shields.io/github/package-json/v/olton/dom)
+[![develop Status](https://img.shields.io/badge/status-release-darklime.svg)](https://david-dm.org/olton/dom)
+[![Dependencies](https://img.shields.io/badge/Dependencies-none-darklime.svg?style=flat)](https://github.com/olton/dom/blob/master/LICENSE)
+![Minified Size](https://img.shields.io/bundlejs/size/dom)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)](https://github.com/olton/dom/blob/master/LICENSE)
 
 ## Documentation
-Read about `m4q` usage in the [Metro 4 docs](https://metroui.org.ua/m4q-about.html)
+Read about `Dom` usage in the [Metro UI](https://metroui.org.ua/) documentation.
 
 
 ### Credits

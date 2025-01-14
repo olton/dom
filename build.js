@@ -1,13 +1,15 @@
-import {build} from "esbuild"
+import {build, context} from "esbuild"
 import progress from "@olton/esbuild-plugin-progress"
-import fs from "fs"
+import fs from "node:fs"
 import pkg from "./package.json" with {type: "json"}
 
 const production = process.env.NODE_ENV === 'production'
 
 const banner = `
 /*!
- * Query DOM (m4q, https://metroui.org.ua)
+ * DOM - Work with HTML elements (@olton/dom, https://metroui.org.ua)
+ * Version: ${pkg.version}
+ * Build date: ${new Date().toLocaleString()}
  * Copyright 2012-${new Date().getFullYear()} by Serhii Pimenov
  * Licensed under MIT
  */
@@ -69,25 +71,12 @@ const defaults = {
 await build({
     ...defaults,
     entryPoints: ['output/index.js'],
-    outfile: 'dist/m4q.esm.js',
+    outfile: 'dist/dom.js',
     format: 'esm',
     plugins: [
         progress({
-            text: 'Building m4q.esm.js...',
-            succeedText: `m4q.esm.js built successfully in %s ms!`
-        }),
-    ],
-})
-
-await build({
-    ...defaults,
-    entryPoints: ['output/index.js'],
-    outfile: 'dist/m4q.cjs.js',
-    format: 'cjs',
-    plugins: [
-        progress({
-            text: 'Building m4q.cjs.js...',
-            succeedText: `m4q.cjs.js built successfully in %s ms!`
+            text: 'Building...',
+            succeedText: `Built successfully in %s ms!`
         }),
     ],
 })
@@ -95,13 +84,13 @@ await build({
 await build({
     ...defaults,
     entryPoints: ['output/lib.js'],
-    outfile: 'lib/m4q.js',
+    outfile: 'lib/dom.js',
     format: 'iife',
     minify: production,
     plugins: [
         progress({
-            text: 'Building lib m4q.js...',
-            succeedText: `Lib m4q.js built successfully in %s ms!`
+            text: 'Building lib...',
+            succeedText: `Lib built successfully in %s ms!`
         }),
     ],
 })
