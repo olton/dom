@@ -34,12 +34,8 @@ $.fn.extend({
         });
     },
 
-    position: function(margin){
+    position: function(margin = false){
         let ml = 0, mt = 0, el, style;
-
-        if (not(margin) || typeof margin !== "boolean") {
-            margin = false;
-        }
 
         if (this.length === 0) {
             return undefined;
@@ -91,15 +87,16 @@ $.fn.extend({
         });
     },
 
-    coord: function(){
+    rect: function(){
         return this.length === 0 ? undefined : this[0].getBoundingClientRect();
     },
 
     pos: function(){
         if (this.length === 0) return ;
+        const el = this[0];
         return {
-            top: parseInt($(this[0]).style("top")),
-            left: parseInt($(this[0]).style("left"))
+            top: parseInt(el.style("top")),
+            left: parseInt(el.style("left"))
         };
     }
 });

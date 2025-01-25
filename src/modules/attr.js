@@ -120,5 +120,15 @@ $.extend({
             }
         }
         return document.characterSet
+    },
+    
+    lang: function(val){
+        if (val) {
+            const h = $('html')
+            if (h.length > 0) {
+                h.attr('lang', val)
+            }
+        }
+        return document.documentElement.lang
     }
 });

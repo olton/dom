@@ -54,12 +54,6 @@ $.extend({
         return Object.prototype.toString.call(obj).replace(/^\[object (.+)]$/, '$1').toLowerCase();
     },
 
-    sleep: function(ms) {
-        ms += new Date().getTime();
-        /* eslint-disable-next-line */
-        while (new Date() < ms){}
-    },
-
     isSelector: function(selector){
         if (typeof selector !== 'string') {
             return false;
