@@ -6,12 +6,15 @@
 ![Alt](https://repobeats.axiom.co/api/embed/cf7e2f9a6de90d56f9a6d2c39a28af4b56bcbdbd.svg "Repobeats analytics image")
 
 #### Status
+![Dependencies](https://img.shields.io/badge/Dependencies-none-darklime.svg)
+![Package Version](https://img.shields.io/github/package-json/v/olton/dom)
+![GitHub Release](https://img.shields.io/github/v/release/olton/dom)
 ![NPM Version](https://img.shields.io/npm/v/%40olton%2Fdom)
-![Version](https://img.shields.io/github/package-json/v/olton/dom)
-[![develop Status](https://img.shields.io/badge/status-release-darklime.svg)](https://david-dm.org/olton/dom)
-[![Dependencies](https://img.shields.io/badge/Dependencies-none-darklime.svg?style=flat)](https://github.com/olton/dom/blob/master/LICENSE)
-![Minified Size](https://img.shields.io/bundlejs/size/dom)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)](https://github.com/olton/dom/blob/master/LICENSE)
+![Website](https://img.shields.io/website/https/dom.org.ua.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?color=7852a9)
+![Code size](https://img.shields.io/github/languages/code-size/olton/dom.svg?color=830000)
+![GitHub JS Size](https://img.shields.io/github/size/olton/dom/lib%2Fdom.js?label=JS%20Size&color=8f99ff)
+
 
 ## Documentation
 
