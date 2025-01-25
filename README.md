@@ -14,9 +14,17 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)](https://github.com/olton/dom/blob/master/LICENSE)
 
 ## Documentation
-Read about `Dom` usage in the [Metro UI](https://docs-new.metroui.org.ua/libraries/dom) documentation.
 
+Read about `Hooks` usage in the [Metro UI](https://docs-new.metroui.org.ua/libraries/dom) documentation.
 
-### Credits
-- `Data` by [jQuery](https://jquery.com)  
-- `Easing` functions by [Andy Ray](https://github.com/AndrewRayCode/easing-utils)
+## License
+
+Hooks are licensed under a [MIT license](LICENSE).
+
+## Sponsors
+
+No sponsor yet :(
+Support this project by [donating](https://www.patreon.com/metroui).
+
+---
+Copyright © 2025 by [Serhii Pimenov](https://pimenov.com.ua)
