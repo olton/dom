@@ -35,13 +35,21 @@ $.extend({
                 createScript(this, into);
             });
         }
+    },
+    
+    loadScript: function(url, into = document.body, callback){
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = url;
+        script.onload = callback;
+        into.appendChild(script);
     }
 });
 
 $.fn.extend({
-    script: function(){
+    script: function(into){
         return this.each(function(){
-            $.script(this);
+            $.script(this, into);
         });
     }
 });

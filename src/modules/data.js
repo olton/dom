@@ -92,7 +92,7 @@ Data.prototype = {
     }
 };
 
-const dataSet = new Data('m4q');
+const dataSet = new Data('dom');
 
 $.extend({
     hasData: function(elem){
@@ -109,7 +109,7 @@ $.extend({
 
     dataSet: function(ns){
         if (not(ns)) return dataSet;
-        if (['INTERNAL', 'M4Q'].indexOf(ns.toUpperCase()) > -1) {
+        if (['INTERNAL', 'DOM'].indexOf(ns.toUpperCase()) > -1) {
             throw Error("You can not use reserved name for your dataset");
         }
         return new Data(ns);

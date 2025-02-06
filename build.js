@@ -40,6 +40,7 @@ const source_files = [
     'src/modules/animation.js',
     'src/modules/visibility.js',
     'src/modules/effects.js',
+    'src/modules/scroll.js',
     'src/modules/init.js',
 ];
 

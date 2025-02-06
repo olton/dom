@@ -36,7 +36,7 @@ $.fn.extend({
         });
     },
 
-    cls: function(array){
+    cls: function(array = false){
         return this.length === 0 ? undefined : array ? this[0].className.split(" ") : this[0].className;
     },
 

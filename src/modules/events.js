@@ -79,20 +79,14 @@ $.extend({
         return this.eventHooks;
     },
 
-    addEventHook: function(event, handler, type){
-        if (not(type)) {
-            type = "before";
-        }
+    addEventHook: function(event, handler, type = "before"){
         $.each(str2arr(event), function(){
             this.eventHooks[camelCase(type+"-"+this)] = handler;
         });
         return this;
     },
 
-    removeEventHook: function(event, type){
-        if (not(type)) {
-            type = "before";
-        }
+    removeEventHook: function(event, type = "before"){
         $.each(str2arr(event), function(){
             delete this.eventHooks[camelCase(type+"-"+this)];
         });

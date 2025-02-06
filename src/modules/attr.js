@@ -76,7 +76,57 @@ $.fn.extend({
         return this.each(function(){
             $(this).attr("id", val);
         });
-    }
+    },
+
+    title: function(val){
+        if (typeof val === "undefined") {
+            return this.length 
+                ? $(this[0]).attr("title")
+                : undefined
+        }
+        return this.each(function(){
+            $(this).attr("title", val);
+        });
+    },
+
+    href: function(val){
+        if (typeof val === "undefined") {
+            return this.length 
+                ? this[0].tagName === "A" ? this[0].href : undefined
+                : undefined
+        }
+        return this.each(function(){
+            if (this.tagName === "A") {
+                this.href = val
+            }
+        });
+    },
+    
+    name: function (val){
+        if (typeof val === "undefined") {
+            return this.length
+                ? this[0].name ? this[0].name : undefined
+                : undefined
+        }
+        return this.each(function(){
+            if (this.name) {
+                this.name = val
+            }
+        });
+    },
+    
+    src: function (val){
+        if (typeof val === "undefined") {
+            return this.length
+                ? this[0].src ? this[0].src : undefined
+                : undefined
+        }
+        return this.each(function(){
+            if (this.src) {
+                this.src = val
+            }
+        });
+    },
 });
 
 $.extend({
@@ -120,5 +170,22 @@ $.extend({
             }
         }
         return document.characterSet
+    },
+    
+    lang: function(val){
+        if (val) {
+            const h = $('html')
+            if (h.length > 0) {
+                h.attr('lang', val)
+            }
+        }
+        return document.documentElement.lang
+    },
+    
+    title: function(val){
+        if (typeof val === "undefined") {
+            return document.title
+        }
+        document.title = val;
     }
 });
