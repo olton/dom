@@ -2,9 +2,9 @@ const matches = Element.prototype.matches;
 
 const $ = (selector, context) => new $.init(selector, context)
 
-$.version = "2.1.2";
-$.build_time = "06.07.2024, 13:17:58";
-$.info = () => console.info(`%c M4Q %c v${$.version} %c ${$.build_time} `, "color: white; font-weight: bold; background: #fd6a02", "color: white; background: darkgreen", "color: white; background: #0080fe;")
+$.version = "___VERSION___";
+$.build_time = "___BUILD_TIME___";
+$.info = () => console.info(`%c Dom %c v${$.version} %c ${$.build_time} `, "color: white; font-weight: bold; background: #fd6a02", "color: white; background: darkgreen", "color: white; background: #0080fe;")
 
 $.fn = $.prototype = Object.create(Array.prototype);
 
