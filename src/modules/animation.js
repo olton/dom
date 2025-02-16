@@ -487,7 +487,7 @@ function animate(args){
             $.animation.elements[animationID].loop += 1;
             $.animation.elements[animationID].started = performance.now();
             $.animation.elements[animationID].duration = dur;
-            $.animation.elements[animationID].id = requestAnimationFrame(animate);
+            $.animation.elements[animationID].id = requestAnimationFrame(animate1);
         };
 
         const done = function() {
@@ -501,7 +501,7 @@ function animate(args){
             resolve(that);
         };
 
-        const animate = function(time) {
+        const animate1 = function(time) {
             let p, t;
             let {stop, pause, started: start} = $.animation.elements[animationID]
 
@@ -521,7 +521,7 @@ function animate(args){
             $.animation.elements[animationID].p = p;
 
             if (pause) {
-                $.animation.elements[animationID].id = requestAnimationFrame(animate);
+                $.animation.elements[animationID].id = requestAnimationFrame(animate1);
                 return;
             }
 
@@ -547,11 +547,11 @@ function animate(args){
                 onFrame.apply(el, [t, p]);
             }
 
-            if (t < 1) {
-                $.animation.elements[animationID].id = requestAnimationFrame(animate);
+            if (t <= 1) {
+                $.animation.elements[animationID].id = requestAnimationFrame(animate1);
             }
 
-            if (parseInt(t) === 1) {
+            if (t >= 1) {
                 if (loop) {
                     if (dir === "alternate") {
                         direction = direction === "normal" ? "reverse" : "normal";
@@ -580,7 +580,9 @@ function animate(args){
                     }
                 }
             }
-        };
+        }
+        
+        
         if (defer > 0) {
             setTimeout(function() {
                 play();

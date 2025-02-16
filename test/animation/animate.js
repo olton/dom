@@ -1,4 +1,4 @@
-import {$} from "../../dist/m4q.esm.js"
+import {$} from "../../dist/dom.js"
 
 var field = document.querySelector(".field");
 var w = field.clientWidth, h = field.clientHeight;
