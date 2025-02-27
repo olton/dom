@@ -77,6 +77,17 @@ $.fn.extend({
                 setStyleProp(el, key, val);
             }
         });
+    },
+    
+    cssVar: function(name, val){
+        if (not(name)) return this;
+        if (not(val)) {
+            return getComputedStyle(this[0]).getPropertyValue("--"+name);
+        } else {
+            return this.each(function(){
+                this.style.setProperty("--"+name, val);
+            });
+        }
     }
 });
 
