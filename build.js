@@ -1,5 +1,6 @@
 import {build, context} from "esbuild"
 import progress from "@olton/esbuild-plugin-progress"
+import { replace } from "esbuild-plugin-replace";
 import fs from "node:fs"
 import pkg from "./package.json" with {type: "json"}
 
@@ -44,34 +45,18 @@ const source_files = [
     'src/modules/init.js',
 ];
 
-let lib = ``, ind = ``
+const indexContent = [...source_files, 'src/modules/export.js'].reduce((content, file) => {
+    return content + fs.readFileSync(file, 'utf8').toString() + "\n\n";
+}, "");
 
-;[...source_files, 'src/modules/populate.js'].forEach(file => {
-    lib += fs.readFileSync(file, 'utf8').toString() + "\n\n";
-})
+fs.writeFileSync('src/index.js', indexContent, {encoding: 'utf8', flag: 'w+'});
 
-;[...source_files, 'src/modules/export.js'].forEach(file => {
-    ind += fs.readFileSync(file, 'utf8').toString() + "\n\n";
-})
-
-lib = lib.replace(/version = ".+"/g, `version = "${pkg.version}"`)
-lib = lib.replace(/build_time = ".+"/g, `build_time = "${new Date().toLocaleString()}"`)
-ind = ind.replace(/version = ".+"/g, `version = "${pkg.version}"`)
-ind = ind.replace(/build_time = ".+"/g, `build_time = "${new Date().toLocaleString()}"`)
-
-fs.writeFileSync('output/lib.js', lib, {encoding: 'utf8', flag: 'w+'});
-fs.writeFileSync('output/index.js', ind, {encoding: 'utf8', flag: 'w+'});
-
-const defaults = {
+const options = {
+    entryPoints: ['output/index.js'],
     bundle: true,
     sourcemap: false,
     minify: false,
     banner: {js: banner},
-}
-
-await build({
-    ...defaults,
-    entryPoints: ['output/index.js'],
     outfile: 'dist/dom.js',
     format: 'esm',
     plugins: [
@@ -79,19 +64,24 @@ await build({
             text: 'Building...',
             succeedText: `Built successfully in %s ms!`
         }),
+        replace({
+            '__BUILD_TIME__': new Date().toLocaleString(),
+            '__VERSION__': pkg.version,
+        })
     ],
-})
+}
 
-await build({
-    ...defaults,
-    entryPoints: ['output/lib.js'],
-    outfile: 'lib/dom.js',
-    format: 'iife',
-    minify: production,
-    plugins: [
-        progress({
-            text: 'Building lib...',
-            succeedText: `Lib built successfully in %s ms!`
-        }),
-    ],
-})
+if (production) {
+    await build({
+        ...options,
+    })
+} else {
+    const ctx = await context({
+        ...options,
+    })
+    
+    await Promise.all([
+        ctx.watch(),
+    ])
+}
+

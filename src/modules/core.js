@@ -2,8 +2,8 @@ const matches = Element.prototype.matches;
 
 const $ = (selector, context) => new $.init(selector, context)
 
-$.version = "___VERSION___";
-$.build_time = "___BUILD_TIME___";
+$.version = "__VERSION__";
+$.build_time = "__BUILD_TIME__";
 $.info = () => console.info(`%c Dom %c v${$.version} %c ${$.build_time} `, "color: white; font-weight: bold; background: #fd6a02", "color: white; background: darkgreen", "color: white; background: #0080fe;")
 
 $.fn = $.prototype = Object.create(Array.prototype);
