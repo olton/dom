@@ -1,6 +1,6 @@
 let _$ = window.$;
 
-window.m4q = $;
+window.Dom = $;
 window.$ = $;
 
 $.global = function(){
