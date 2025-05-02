@@ -49,7 +49,7 @@ const indexContent = [...source_files, 'src/modules/export.js'].reduce((content,
     return content + fs.readFileSync(file, 'utf8').toString() + "\n\n";
 }, "");
 
-fs.writeFileSync('src/index.js', indexContent, {encoding: 'utf8', flag: 'w+'});
+fs.writeFileSync('output/index.js', indexContent, {encoding: 'utf8', flag: 'w+'});
 
 const options = {
     entryPoints: ['output/index.js'],

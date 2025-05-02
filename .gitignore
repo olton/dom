@@ -3,4 +3,3 @@ node_modules
 dist
 ftpauth.json
 output/index.js
-output/lib.js
