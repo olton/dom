@@ -4,7 +4,7 @@ import { $ } from '../dist/dom.js';
 describe('$.parseHTML', () => {
     it('should parse a single tag', () => {
         const result = $.parseHTML('<div></div>');
-
+        
         expect(Array.isArray(result)).toBe(true);
         expect(result.length).toBe(1);
         expect(result[0] instanceof HTMLElement).toBe(true);
@@ -86,11 +86,11 @@ describe('$.parseHTML', () => {
     });
 
     it('should return empty array for non-string input', () => {
-        expect($.parseHTML(null)).toEqual([]);
-        expect($.parseHTML(undefined)).toEqual([]);
-        expect($.parseHTML(123)).toEqual([]);
-        expect($.parseHTML({})).toEqual([]);
-        expect($.parseHTML([])).toEqual([]);
+        expect($.parseHTML(null)).toBeEmpty();
+        expect($.parseHTML(undefined)).toBeEmpty();
+        expect($.parseHTML(123)).toBeEmpty();
+        expect($.parseHTML({})).toBeEmpty();
+        expect($.parseHTML([])).toBeEmpty();
     });
 
     it('should parse HTML with comments', () => {

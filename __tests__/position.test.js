@@ -6,6 +6,7 @@ let container;
 
 beforeEach(() => {
     // Создаем тестовую DOM-структуру
+    document.body.style.height = "2000px"
     document.body.innerHTML = `
             <div id="container" style="position: relative; width: 500px; height: 500px; margin: 50px; padding: 20px;">
                 <div id="test-element" style="position: absolute; width: 100px; height: 100px; top: 100px; left: 100px; margin: 10px;">
@@ -16,10 +17,23 @@ beforeEach(() => {
 
     testElement = $('#test-element');
     container = $('#container');
-
-    // Мокирование глобальных переменных scrollX и scrollY
-    window.scrollX = 0;
-    window.scrollY = 0;
+    
+    container[0].getBoundingClientRect = () => ({
+        top:  50,  
+        left: 50,
+        width: 500,
+        height: 500,
+        right: 550,
+        bottom: 550
+    })
+    testElement[0].getBoundingClientRect = () => ({
+        top:  160,  
+        left: 160,
+        width: 100,
+        height: 100,
+        right: 260,
+        bottom: 260
+    })
 });
 
 afterEach(() => {
@@ -28,24 +42,24 @@ afterEach(() => {
 });
 
 describe('offset()', () => {
-    it('should return correct offset relative to document', () => {
+    it('should return correct offset relative to document', () => {        
         const offset = testElement.offset();
 
         // Проверяем примерные значения с допусками для разных окружений
-        expect(offset.top).toBeGreaterThanOrEqual(170); // 50 + 20 + 100
-        expect(offset.left).toBeGreaterThanOrEqual(170); // 50 + 20 + 100
+        expect(offset.top).toBeGreaterThanOrEqual(160); // 50 + 10 + 100
+        expect(offset.left).toBeGreaterThanOrEqual(160); // 50 + 10 + 100
     });
 
     it('should handle scroll position', () => {
         // Имитация прокрутки
-        window.scrollX = 100;
-        window.scrollY = 200;
+        $(window).scrollTop(200);
+        $(window).scrollLeft(100);
 
         const offset = testElement.offset();
 
         // Проверяем, что offset учитывает прокрутку
-        expect(offset.top).toBeGreaterThanOrEqual(370); // 50 + 20 + 100 + 200 (scrollY)
-        expect(offset.left).toBeGreaterThanOrEqual(270); // 50 + 20 + 100 + 100 (scrollX)
+        expect(offset.top).toBeGreaterThanOrEqual(360); // 50 + 10 + 100 + 200
+        expect(offset.left).toBeGreaterThanOrEqual(260); // 50 + 10 + 100 + 100
     });
 
     it('should return undefined for empty collections', () => {

@@ -1,5 +1,8 @@
 $.each = function(ctx, cb){
     let index = 0;
+    if (typeof ctx !== "object") {
+        ctx = []
+    } 
     if (isArrayLike(ctx)) {
         [].forEach.call(ctx, function(val, key) {
             cb.apply(val, [key, val]);

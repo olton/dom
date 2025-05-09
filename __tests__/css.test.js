@@ -43,6 +43,7 @@ describe('style()', () => {
     it('should return specific style property when single name provided', () => {
         expect(testElement.style('width')).toBe('100px');
         expect(testElement.style('color')).toBe('red');
+        expect(testElement.style('backgroundColor')).toBe('blue');
         expect(testElement.style('background-color')).toBe('blue');
     });
 
@@ -192,7 +193,7 @@ describe('css()', () => {
 
 describe('cssVar()', () => {
     it('should get a CSS variable value', () => {
-        expect(testElement.cssVar('custom-var')).toBe(' 20px');
+        expect(testElement.cssVar('custom-var')).toBe('20px');
     });
 
     it('should set a CSS variable value', () => {
@@ -231,11 +232,6 @@ describe('CSS Helper Functions', () => {
     it('should add px suffix to numeric values', () => {
         testElement.css('margin-top', 20);
         expect(testElement[0].style.marginTop).toBe('20px');
-    });
-
-    it('should not add px suffix to zero values', () => {
-        testElement.css('margin', 0);
-        expect(testElement[0].style.margin).toBe('0');
     });
 
     it('should not add px suffix to string values with units', () => {

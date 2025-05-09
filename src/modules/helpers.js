@@ -99,7 +99,9 @@ function setStyleProp (el, key, val) {
     if (['scrollLeft', 'scrollTop'].indexOf(key) > -1) {
         el[key] = (parseInt(val))
     } else {
-        el.style[key] = isNaN(val) || numProps.indexOf('' + key) > -1 ? val : val + 'px'
+        el.style[key] = isNaN(val) || numProps.indexOf('' + key) > -1
+            ? val
+            : parseInt(val) === 0 ? 0 : val + 'px'
     }
 }
 

@@ -1,7 +1,7 @@
 $.fn.extend({
 
     style: function(name, pseudo){
-        let el;
+        let el
 
         function _getStyle(el, prop, pseudo){
             return ["scrollLeft", "scrollTop"].indexOf(prop) > -1 ? $(el)[prop]() : getComputedStyle(el, pseudo)[prop];
@@ -21,7 +21,7 @@ $.fn.extend({
             return getComputedStyle(el, pseudo);
         } else {
             let result = {}, names = name.split(", ").map(function(el){
-                return (""+el).trim();
+                return (""+camelCase(el)).trim();
             });
             if (names.length === 1)  {
                 return _getStyle(el, names[0], pseudo);
@@ -67,8 +67,7 @@ $.fn.extend({
             return  this.style(key);
         }
 
-        return this.each(function(){
-            const el = this;
+        return this.each(function(_, el){
             if (typeof key === "object") {
                 $.each(key, function(key, val){
                     setStyleProp(el, key, val);
@@ -80,7 +79,7 @@ $.fn.extend({
     },
     
     cssVar: function(name, val){
-        if (not(name)) return this;
+        if (not(name)) return undefined;
         if (not(val)) {
             return getComputedStyle(this[0]).getPropertyValue("--"+name);
         } else {

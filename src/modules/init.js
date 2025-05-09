@@ -76,7 +76,13 @@ $.init = function(sel, ctx){
                 //console.error(sel + " is not a valid selector");
             }
         } else {
-            $.merge(this, parsed);
+            console.log("Selector", parsed.length);
+            // $.merge(this, parsed);
+            for (let i = 0; i < parsed.length; i++) {
+                if (parsed[i].nodeType === 1) {
+                    this.push(parsed[i]);
+                }
+            }
         }
     }
 

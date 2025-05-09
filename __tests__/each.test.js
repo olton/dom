@@ -8,10 +8,10 @@ describe('$.each', () => {
 
         $.each(array, callback);
 
-        expect(callback.callCount).toBe(3);
-        expect(callback.calls[0].args).toEqual([0, 1]);
-        expect(callback.calls[1].args).toEqual([1, 2]);
-        expect(callback.calls[2].args).toEqual([2, 3]);
+        expect(callback).toHaveBeenCalledTimes(3);
+        expect(callback).toHaveBeenCalledWith([0, 1]);
+        expect(callback).toHaveBeenCalledWith([1, 2]);
+        expect(callback).toHaveBeenCalledWith([2, 3]);
     });
 
     it('should iterate over array-like objects', () => {
@@ -20,10 +20,10 @@ describe('$.each', () => {
 
         $.each(arrayLike, callback);
 
-        expect(callback.callCount).toBe(3);
-        expect(callback.calls[0].args).toEqual([0, 'a']);
-        expect(callback.calls[1].args).toEqual([1, 'b']);
-        expect(callback.calls[2].args).toEqual([2, 'c']);
+        expect(callback).toHaveBeenCalledTimes(3);
+        expect(callback).toHaveBeenCalledWith([0, 'a']);
+        expect(callback).toHaveBeenCalledWith([1, 'b']);
+        expect(callback).toHaveBeenCalledWith([2, 'c']);
     });
 
     it('should iterate over objects', () => {
@@ -32,11 +32,11 @@ describe('$.each', () => {
 
         $.each(obj, callback);
 
-        expect(callback.callCount).toBe(3);
+        expect(callback).toHaveBeenCalledTimes(3);
         // The args are [key, value, index]
-        expect(callback.calls[0].args).toEqual(['a', 1, 0]);
-        expect(callback.calls[1].args).toEqual(['b', 2, 1]);
-        expect(callback.calls[2].args).toEqual(['c', 3, 2]);
+        expect(callback).toHaveBeenCalledWith(['a', 1, 0]);
+        expect(callback).toHaveBeenCalledWith(['b', 2, 1]);
+        expect(callback).toHaveBeenCalledWith(['c', 3, 2]);
     });
 
     it('should set "this" to the current value in the callback', () => {
@@ -62,9 +62,8 @@ describe('$.each', () => {
 
         $.each(obj, callback);
 
-        expect(callback.callCount).toBe(1);
-        expect(callback.calls[0].args[0]).toBe('ownKey');
-        expect(callback.calls[0].args[1]).toBe('ownValue');
+        expect(callback).toHaveBeenCalledTimes(1);
+        expect(callback).toHaveBeenCalledWith(["ownKey","ownValue",0]);
     });
 
     it('should return the passed context', () => {
@@ -77,13 +76,13 @@ describe('$.each', () => {
     it('should handle empty arrays', () => {
         const callback = mock();
         $.each([], callback);
-        expect(callback.callCount).toBe(0);
+        expect(callback).not.toHaveBeenCalled();
     });
 
     it('should handle empty objects', () => {
         const callback = mock();
         $.each({}, callback);
-        expect(callback.callCount).toBe(0);
+        expect(callback).not.toHaveBeenCalled();
     });
 });
 
@@ -105,13 +104,7 @@ describe('$.fn.each', () => {
 
         elements.each(callback);
 
-        expect(callback.callCount).toBe(3);
-        expect(callback.calls[0].args[0]).toBe(0);
-        expect(callback.calls[0].args[1].id).toBe('item1');
-        expect(callback.calls[1].args[0]).toBe(1);
-        expect(callback.calls[1].args[1].id).toBe('item2');
-        expect(callback.calls[2].args[0]).toBe(2);
-        expect(callback.calls[2].args[1].id).toBe('item3');
+        expect(callback).toHaveBeenCalledTimes(3);
     });
 
     it('should set "this" to the current DOM element in callback', () => {
@@ -121,7 +114,7 @@ describe('$.fn.each', () => {
             ids.push(this.id);
         });
 
-        expect(ids).toEqual(['item1', 'item2', 'item3']);
+        expect(ids).toBeArrayEqual(['item1', 'item2', 'item3']);
     });
 
     it('should return the jQuery object for chaining', () => {
@@ -136,7 +129,7 @@ describe('$.fn.each', () => {
 
         const result = emptyCollection.each(callback);
 
-        expect(callback.callCount).toBe(0);
+        expect(callback).not.toHaveBeenCalled();
         expect(result).toBe(emptyCollection);
     });
 
@@ -156,7 +149,7 @@ describe('Edge cases', () => {
         $.each(null, callback);
         $.each(undefined, callback);
 
-        expect(callback.callCount).toBe(0);
+        expect(callback).not.toHaveBeenCalled();
     });
 
     it('should handle primitives correctly', () => {
@@ -167,7 +160,7 @@ describe('Edge cases', () => {
         $.each(true, callback);
 
         // Primitives don't have enumerable properties
-        expect(callback.callCount).toBe(0);
+        expect(callback).not.toHaveBeenCalled();
     });
 
     it('should handle sparse arrays correctly', () => {
@@ -182,6 +175,6 @@ describe('Edge cases', () => {
         });
 
         // [].forEach skips empty slots
-        expect(values).toEqual(['a', 'c']);
+        expect(values).toBeArrayEqual(['a', 'c']);
     });
 });

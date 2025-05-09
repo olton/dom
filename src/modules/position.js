@@ -1,30 +1,34 @@
 $.fn.extend({
     offset: function(val){
-        let rect;
-
-        if (not(val)) {
+        if (val === undefined) { // Заменяем not(val) на явную проверку
             if (this.length === 0) return undefined;
-            rect = this[0].getBoundingClientRect();
+            let rect = this[0].getBoundingClientRect();
             return {
-                top: rect.top + scrollY,
-                left: rect.left + scrollX
+                top: rect.top + (window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0),
+                left: rect.left + (window.scrollX || window.pageXOffset || document.documentElement.scrollLeft || 0)
             };
         }
 
-        return this.each(function(){ //?
+        return this.each(function(){
             let el = $(this),
                 top = val.top,
                 left = val.left,
-                position = getComputedStyle(this).position,
-                offset = el.offset();
+                position = getComputedStyle(this).position;
+
+            // Получаем текущие координаты без рекурсивного вызова
+            let currentRect = this.getBoundingClientRect();
+            let currentOffset = {
+                top: currentRect.top + (window.scrollY || window.pageYOffset || 0),
+                left: currentRect.left + (window.scrollX || window.pageXOffset || 0)
+            };
 
             if (position === "static") {
                 el.css("position", "relative");
             }
 
             if (["absolute", "fixed"].indexOf(position) === -1) {
-                top = top - offset.top;
-                left = left - offset.left;
+                top = top - currentOffset.top;
+                left = left - currentOffset.left;
             }
 
             el.css({

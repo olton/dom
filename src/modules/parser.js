@@ -8,17 +8,16 @@ $.parseHTML = function(data){
 
     data = data.trim();
 
-    ctx = document.implementation.createHTMLDocument("");
-    base = ctx.createElement( "base" );
-    base.href = document.location.href;
-    ctx.head.appendChild( base );
-    _context = ctx.body;
-
     singleTag = regexpSingleTag.exec(data);
 
     if (singleTag) {
-        result.push(document.createElement(singleTag[1]).cloneNode(true));
+        result.push(document.createElement(singleTag[1]));
     } else {
+        ctx = document.implementation.createHTMLDocument("");
+        base = ctx.createElement( "base" );
+        base.href = document.location.href;
+        ctx.head.appendChild( base );
+        _context = ctx.body;
         _context.innerHTML = data;
         for(let i = 0; i < _context.childNodes.length; i++) {
             // Клонируем узел, чтобы удалить parentNode

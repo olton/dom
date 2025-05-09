@@ -386,8 +386,9 @@ describe('siblings()', () => {
     });
 
     it('should return passed Dom object', () => {
-        const jq = $('<div>');
-        expect($('#first-child').siblings(jq)).toBe(jq);
+        const div = $('<div>');
+        console.log(div);
+        expect($('#first-child').siblings(div)).toBe(div);
     });
 });
 

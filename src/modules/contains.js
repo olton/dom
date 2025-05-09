@@ -291,11 +291,8 @@ $.fn.extend({
     siblings: function(s){
         let res = [];
 
-        if (this.length === 0) {
-            return ;
-        }
-
-        if (s instanceof $) return s;
+        if (this.length === 0) { return undefined; }
+        if (s instanceof $) { return s; }
 
         this.each(function(){
             const el = this;
