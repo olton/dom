@@ -16,15 +16,16 @@ $.fn.extend({
             el = undefined;
         }
 
-        if (not(el)) {
+        if (!el || !el?.parentNode) {
             return _index;
         }
-
+        
         if (el && el.parentNode) $.each(el.parentNode.children, function(i){
             if (this === el) {
                 _index = i;
             }
         });
+        
         return _index;
     },
 

@@ -8,7 +8,7 @@ $.fn.extend({
 
         if (this.length && arguments.length === 0) {
             $.each(this[0].attributes, function(){
-                attributes[this.nodeName] = this.nodeValue;
+                attributes[this.name] = this.value;
             });
             return attributes;
         }
@@ -37,7 +37,8 @@ $.fn.extend({
             return this.each(function(){
                 const el = this;
                 $.each(this.attributes, function(){
-                    el.removeAttribute(this);
+                    console.log(this.name);
+                    el.removeAttribute(this.name);
                 });
             });
         }

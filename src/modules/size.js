@@ -36,24 +36,28 @@ $.fn.extend({
             return ;
         }
 
-        if (!not(val) && typeof val !== "boolean") {
+        const setter = typeof val === "number"
+        
+        if (setter) {
             return this.each(function(){
                 const el = this;
                 if (el === window || el === document) {return ;}
                 let h, style = getComputedStyle(el),
-                    bs = prop === 'width' ? parseInt(style['border-left-width']) + parseInt(style['border-right-width']) : parseInt(style['border-top-width']) + parseInt(style['border-bottom-width']),
-                    pa = prop === 'width' ? parseInt(style['padding-left']) + parseInt(style['padding-right']) : parseInt(style['padding-top']) + parseInt(style['padding-bottom']);
+                    bs = prop === 'width' ? parseInt(style['borderLeftWidth']) + parseInt(style['borderRightWidth']) : parseInt(style['borderTopWidth']) + parseInt(style['borderBottomWidth']),
+                    pa = prop === 'width' ? parseInt(style['paddingLeft']) + parseInt(style['paddingRight']) : parseInt(style['paddingTop']) + parseInt(style['paddingBottom']);
 
                 h = $(this)[prop](val)[prop]() - bs - pa;
                 el.style[prop] = h + 'px';
             });
         }
 
+        const includeMargin = val === true;
+        
         el = this[0];
         size = el[prop === 'width' ? 'offsetWidth' : 'offsetHeight'];
         style = getComputedStyle(el);
-        result = size + parseInt(style[prop === 'width' ? 'margin-left' : 'margin-top']) + parseInt(style[prop === 'width' ? 'margin-right' : 'margin-bottom']);
-        return val === true ? result : size;
+        result = size + parseInt(style[prop === 'width' ? 'marginLeft' : 'marginTop']) + parseInt(style[prop === 'width' ? 'marginRight' : 'marginBottom']);
+        return includeMargin ? result : size;
     },
 
     outerWidth: function(val){
@@ -69,10 +73,10 @@ $.fn.extend({
         const s = getComputedStyle(this[0], p);
 
         return {
-            top: parseInt(s["padding-top"]),
-            right: parseInt(s["padding-right"]),
-            bottom: parseInt(s["padding-bottom"]),
-            left: parseInt(s["padding-left"])
+            top: parseInt(s["paddingTop"]),
+            right: parseInt(s["paddingRight"]),
+            bottom: parseInt(s["paddingBottom"]),
+            left: parseInt(s["paddingLeft"])
         };
     },
 
@@ -81,10 +85,10 @@ $.fn.extend({
         const s = getComputedStyle(this[0], p);
 
         return {
-            top: parseInt(s["margin-top"]),
-            right: parseInt(s["margin-right"]),
-            bottom: parseInt(s["margin-bottom"]),
-            left: parseInt(s["margin-left"])
+            top: parseInt(s["marginTop"]),
+            right: parseInt(s["marginRight"]),
+            bottom: parseInt(s["marginBottom"]),
+            left: parseInt(s["marginLeft"])
         };
     },
 
@@ -93,10 +97,10 @@ $.fn.extend({
         const s = getComputedStyle(this[0], p);
 
         return {
-            top: parseInt(s["border-top-width"]),
-            right: parseInt(s["border-right-width"]),
-            bottom: parseInt(s["border-bottom-width"]),
-            left: parseInt(s["border-left-width"])
+            top: parseInt(s["borderTopWidth"]),
+            right: parseInt(s["borderRightWidth"]),
+            bottom: parseInt(s["borderBottomWidth"]),
+            left: parseInt(s["borderLeftWidth"])
         };
     }
 });

@@ -71,6 +71,7 @@ $.fn.extend({
     empty: function(){
         return this.each(function(){
             if (typeof this.innerHTML !== "undefined") this.innerHTML = "";
+            if (typeof this.value !== "undefined") this.value = "";
         });
     },
 

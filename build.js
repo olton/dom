@@ -16,40 +16,53 @@ const banner = `
  */
 `
 
-const source_files = [
-    'src/modules/mode.js',
-    'src/modules/helpers.js',
+function buildIndex(){
+    const source_files = [
+        'src/modules/mode.js',
+        'src/modules/helpers.js',
 
-    'src/modules/core.js',
-    'src/modules/interval.js',
-    'src/modules/contains.js',
-    'src/modules/script.js',
-    'src/modules/prop.js',
-    'src/modules/each.js',
-    'src/modules/data.js',
-    'src/modules/utils.js',
-    'src/modules/events.js',
-    'src/modules/ajax.js',
-    'src/modules/css.js',
-    'src/modules/classes.js',
-    'src/modules/parser.js',
-    'src/modules/size.js',
-    'src/modules/position.js',
-    'src/modules/attr.js',
-    'src/modules/bind.js',
-    'src/modules/manipulation.js',
-    'src/modules/animation.js',
-    'src/modules/visibility.js',
-    'src/modules/effects.js',
-    'src/modules/scroll.js',
-    'src/modules/init.js',
-];
+        'src/modules/core.js',
+        'src/modules/interval.js',
+        'src/modules/contains.js',
+        'src/modules/script.js',
+        'src/modules/prop.js',
+        'src/modules/each.js',
+        'src/modules/data.js',
+        'src/modules/utils.js',
+        'src/modules/events.js',
+        'src/modules/ajax.js',
+        'src/modules/css.js',
+        'src/modules/classes.js',
+        'src/modules/parser.js',
+        'src/modules/size.js',
+        'src/modules/position.js',
+        'src/modules/attr.js',
+        'src/modules/bind.js',
+        'src/modules/manipulation.js',
+        'src/modules/animation.js',
+        'src/modules/visibility.js',
+        'src/modules/effects.js',
+        'src/modules/scroll.js',
+        'src/modules/init.js',
+    ];
 
-const indexContent = [...source_files, 'src/modules/export.js'].reduce((content, file) => {
-    return content + fs.readFileSync(file, 'utf8').toString() + "\n\n";
-}, "");
+    const indexContent = [...source_files, 'src/modules/export.js'].reduce((content, file) => {
+        return content + fs.readFileSync(file, 'utf8').toString() + "\n\n";
+    }, "");
 
-fs.writeFileSync('output/index.js', indexContent, {encoding: 'utf8', flag: 'w+'});
+    fs.writeFileSync('output/index.js', indexContent, {encoding: 'utf8', flag: 'w+'});
+}
+
+
+const buildIndexPlugin = {
+    name: 'buildIndex',
+    setup(build) {
+        build.onStart(() => {
+            console.log('Building index.js...');
+            buildIndex()
+        });
+    }
+}
 
 const options = {
     entryPoints: ['output/index.js'],
@@ -60,6 +73,7 @@ const options = {
     outfile: 'dist/dom.js',
     format: 'esm',
     plugins: [
+        buildIndexPlugin,
         progress({
             text: 'Building...',
             succeedText: `Built successfully in %s ms!`

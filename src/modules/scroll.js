@@ -28,6 +28,10 @@ $.fn.extend({
             return this.length === 0 ? undefined : this[0] === window ? scrollY : this[0].scrollTop;
         }
         return this.each(function () {
+            if (this === window) {
+                window.scrollTo(window.scrollX, val);
+                return;
+            }
             this.scrollTop = val;
         });
     },
@@ -37,6 +41,10 @@ $.fn.extend({
             return this.length === 0 ? undefined : this[0] === window ? scrollX : this[0].scrollLeft;
         }
         return this.each(function () {
+            if (this === window) {
+                window.scrollTo(val, window.scrollY);
+                return;
+            }
             this.scrollLeft = val;
         });
     },

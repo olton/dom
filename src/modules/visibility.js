@@ -2,6 +2,11 @@ $.extend({
     hidden: function(el, val, cb){
         el = $(el)[0];
 
+        if (typeof val === "undefined") {
+            el.hidden = !el.hidden;
+            return this;
+        }
+        
         if (typeof val === "string") {
             val = val.toLowerCase() === "true";
         }

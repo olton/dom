@@ -6,16 +6,30 @@ $.extend({
     touchable: isTouch(),
     isPrivateAddress: isPrivateAddress,
 
-    uniqueId: function (prefix) {
-        let d = new Date().getTime();
-        if (not(prefix)) {
-            prefix = 'm4q';
+    hashCode: function(str) {
+        let hash = 0,
+            i, chr;
+        if (str.length === 0) return hash;
+        for (i = 0; i < str.length; i++) {
+            chr = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + chr;
+            hash |= 0; // Convert to 32bit integer
         }
-        return (prefix !== '' ? prefix + '-' : '') + 'xxxx-xxxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            const r = (d + Math.random() * 16) % 16 | 0;
-            d = Math.floor(d / 16);
-            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-        });
+        return hash;
+    },
+    
+    uniqueId: function (salt = 'salt') {
+        let name
+        if (typeof salt === "function") {
+            name = salt.name
+        } else if (typeof salt === "string" && salt) {
+            name = salt
+        } else if (typeof salt === "string" && salt.length === 0) {
+            name = 'salt'
+        } else {        
+            name = salt.toString()
+        }
+        return 'dom-' + $.hashCode(name)
     },
 
     toArray: function(n){
@@ -55,9 +69,15 @@ $.extend({
     },
 
     isSelector: function(selector){
-        if (typeof selector !== 'string') {
+        if (
+            typeof selector !== 'string' 
+            || selector.length === 0 
+            || selector === '#' 
+            || selector === '.') 
+        {
             return false;
         }
+        
         try {
             document.querySelector(selector);
             return true;
