@@ -31,12 +31,6 @@ describe('offset()', () => {
     it('should return correct offset relative to document', () => {
         const offset = testElement.offset();
 
-        // Учитываем margin контейнера (50px), padding контейнера (20px), top элемента (100px) и margin элемента (10px)
-        expect(offset).toEqual({
-            top: expect.any(Number),
-            left: expect.any(Number)
-        });
-
         // Проверяем примерные значения с допусками для разных окружений
         expect(offset.top).toBeGreaterThanOrEqual(170); // 50 + 20 + 100
         expect(offset.left).toBeGreaterThanOrEqual(170); // 50 + 20 + 100

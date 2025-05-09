@@ -1,13 +1,11 @@
 $.fn.extend({
-    index: function(sel){
-        let el, _index = -1;
-
-        if (this.length === 0) {
-            return _index;
-        }
-
+    _getDefaultElement(sel){
+        let el;
+        
         if (not(sel)) {
             el = this[0];
+        } else if (sel instanceof HTMLElement) {
+            el = sel;
         } else if (sel instanceof $ && sel.length > 0) {
             el = sel[0];
         } else if (typeof sel === "string") {
@@ -15,10 +13,18 @@ $.fn.extend({
         } else {
             el = undefined;
         }
+        
+        return el;
+    },
+    
+    index: function(sel){
+        let el, _index = -1;
 
-        if (!el || !el?.parentNode) {
-            return _index;
-        }
+        if (this.length === 0) { return _index; }
+
+        el = this._getDefaultElement(sel);
+
+        if (!el) { return _index; }
         
         if (el && el.parentNode) $.each(el.parentNode.children, function(i){
             if (this === el) {
@@ -32,23 +38,11 @@ $.fn.extend({
     indexOf: function(sel){
         let el, _index = -1;
 
-        if (this.length === 0) {
-            return _index;
-        }
+        if (this.length === 0) { return _index; }
+        
+        el = this._getDefaultElement(sel);
 
-        if (not(sel)) {
-            el = this[0];
-        } else if (sel instanceof $ && sel.length > 0) {
-            el = sel[0];
-        } else if (typeof sel === "string") {
-            el = $(sel)[0];
-        } else {
-            el = undefined;
-        }
-
-        if (not(el)) {
-            return _index;
-        }
+        if (!el) { return _index; }
 
         this.each(function(i){
             if (this === el) {
@@ -61,13 +55,20 @@ $.fn.extend({
 
     get: function(i){
         if (i === undefined) {
-            return this.items();
+            return this
         }
-        return i < 0 ? this[ i + this.length ] : this[ i ];
+        return i < 0 
+            ? this[ i + this.length ] 
+            : i > this.length - 1 
+                ? undefined 
+                : this[ i ];
     },
 
     eq: function(i){
-        return !not(i) && this.length > 0 ? $.extend($(this.get(i)), {_prevObj: this}) : this;
+        if (not(i)) {
+            return this;
+        }
+        return this.length > 0 ? $.extend($(this.get(i)), {_prevObj: this}) : this;
     },
 
     is: function(s){
@@ -94,6 +95,7 @@ $.fn.extend({
         } else
 
         if (s === ":visible") {
+            result = false;
             this.each(function(){
                 if (isVisible(this)) result = true;
             });
@@ -171,14 +173,14 @@ $.fn.extend({
 
     odd: function(){
         const result = this.filter(function(el, i){
-            return i % 2 === 0;
+            return (i + 1) % 2 !== 0;
         });
         return $.extend(result, {_prevObj: this});
     },
 
     even: function(){
         const result = this.filter(function(el, i){
-            return i % 2 !== 0;
+            return (i + 1) % 2 === 0;
         });
         return $.extend(result, {_prevObj: this});
     },
@@ -255,7 +257,7 @@ $.fn.extend({
             return matches.call(el, s);
         }) : res;
 
-        return $.extend($.merge($(), res), {_prevObj: this});
+        return res.length ? $.extend($.merge($(), res), {_prevObj: this}) : undefined;
     },
 
     parents: function(s){
@@ -383,28 +385,17 @@ $.fn.extend({
 
     closest: function(s){
         let res = [];
+        if (this.length === 0) { return undefined; }
+        if (!s) { return this.parent(); }
 
-        if (this.length === 0) {
-            return ;
-        }
-
-        if (s instanceof $) return s;
-
-        if (!s) {
-            return this.parent(s);
-        }
-
-        this.each(function(){
-            let el = this;
-            while (el) {
-                if (!el) break;
-                if (matches.call(el, s)) {
-                    res.push(el);
-                    return ;
-                }
-                el = el.parentElement;
+        let el = this[0];
+        while (el) {
+            if (matches.call(el, s)) {
+                res.push(el);
+                break ;
             }
-        });
+            el = el.parentElement;
+        }
 
         return $.extend($.merge($(), res.reverse()), {_prevObj: this});
     },

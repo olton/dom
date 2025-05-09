@@ -73,7 +73,6 @@ const options = {
     outfile: 'dist/dom.js',
     format: 'esm',
     plugins: [
-        buildIndexPlugin,
         progress({
             text: 'Building...',
             succeedText: `Built successfully in %s ms!`
@@ -86,10 +85,12 @@ const options = {
 }
 
 if (production) {
+    buildIndex()
     await build({
         ...options,
     })
 } else {
+    buildIndex()
     const ctx = await context({
         ...options,
     })

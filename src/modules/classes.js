@@ -8,14 +8,12 @@ $.fn.extend({
     },
 
     hasClass: function(cls){
-        let result = false;
-        const classes = cls.split(" ").filter(function(v){
-            return (""+v).trim() !== "";
-        });
-
         if (not(cls)) {
             return false;
         }
+
+        let result = false;
+        const classes = cls.split(" ").filter(v => (""+v).trim() !== "");
 
         this.each(function(){
             const el = this;

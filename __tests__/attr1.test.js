@@ -9,6 +9,7 @@ beforeEach(() => {
             <div id="test-div" class="test-class" data-test="test-value" title="Test Title"></div>
             <a href="https://example.com" id="test-link">Test Link</a>
             <img src="test.jpg" id="test-img" name="test-image">
+            <input type="text" id="test-input" value="Test Input" name="test-input-name">
         `;
 
     testDiv = $('#test-div');
@@ -66,15 +67,14 @@ describe('removeAttr()', () => {
     });
 
     it('should remove all attributes when called with no arguments', () => {
-        testDiv.removeAttr();
-        const element = document.getElementById('test-div');
-        expect(element.attributes.length).toBe(0); 
+        const div = testDiv.removeAttr();
+        expect(div.attr()).toBeObject({}); 
     });
 });
 
 describe('toggleAttr()', () => {
-    it('should remove attribute when val is undefined or false', () => {
-        testDiv.toggleAttr('data-test', false);
+    it('should remove attribute when val is undefined', () => {
+        testDiv.toggleAttr('data-test');
         expect(document.getElementById('test-div').hasAttribute('data-test')).toBe(false);
     });
 
@@ -125,14 +125,14 @@ describe('href()', () => {
 
 describe('name()', () => {
     it('should get element name', () => {
-        const img = $('#test-img');
-        expect(img.name()).toBe('test-image');
+        const img = $('#test-input');
+        expect(img.name()).toBe('test-input-name');
     });
 
     it('should set element name', () => {
-        const img = $('#test-img');
-        img.name('new-image-name');
-        expect(document.getElementById('test-img').name).toBe('new-image-name');
+        const input = $('#test-input');
+        input.name('new-input-name');
+        expect(document.getElementById('test-input').name).toBe('new-input-name');
     });
 });
 

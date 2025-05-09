@@ -17,11 +17,12 @@ $.parseHTML = function(data){
     singleTag = regexpSingleTag.exec(data);
 
     if (singleTag) {
-        result.push(document.createElement(singleTag[1]));
+        result.push(document.createElement(singleTag[1]).cloneNode(true));
     } else {
         _context.innerHTML = data;
         for(let i = 0; i < _context.childNodes.length; i++) {
-            result.push(_context.childNodes[i]);
+            // Клонируем узел, чтобы удалить parentNode
+            result.push(_context.childNodes[i].cloneNode(true));
         }
     }
 

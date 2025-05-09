@@ -7,8 +7,8 @@ beforeEach(() => {
             <div id="parent">
                 <div id="first-child" class="child">First Child</div>
                 <div id="second-child" class="child">
-                    <p class="paragraph">Paragraph 1</p>
-                    <p class="paragraph">Paragraph 2</p>
+                    <p class="paragraph" id="p1">Paragraph 1</p>
+                    <p class="paragraph" id="p2">Paragraph 2</p>
                     <span class="span-element">Span 1</span>
                 </div>
                 <div id="third-child" class="child">Third Child</div>
@@ -42,7 +42,7 @@ describe('index()', () => {
     });
 
     it('should return -1 for elements without parent', () => {
-        const detached = $('<div>Detached</div>');
+        const detached = $('<div id="detached">Detached</div>');
         expect(detached.index()).toBe(-1);
     });
 
@@ -74,7 +74,7 @@ describe('indexOf()', () => {
         expect($('.child').indexOf('#second-child')).toBe(1);
     });
 
-    it('should return index of element when provided as jQuery object', () => {
+    it('should return index of element when provided as Dom object', () => {
         expect($('.child').indexOf($('#second-child'))).toBe(1);
     });
 
@@ -103,14 +103,14 @@ describe('get()', () => {
     it('should return all elements when no index provided', () => {
         const children = $('.child');
         const result = children.get();
-        expect(Array.isArray(result)).toBe(true);
+        expect(result).toBeInstanceOf($);
         expect(result.length).toBe(3);
         expect(result[0]).toBe(document.getElementById('first-child'));
     });
 });
 
 describe('eq()', () => {
-    it('should return new jQuery object with element at specified index', () => {
+    it('should return new Dom object with element at specified index', () => {
         const children = $('.child');
         const second = children.eq(1);
 
@@ -128,12 +128,11 @@ describe('eq()', () => {
         expect(last[0]).toBe(document.getElementById('third-child'));
     });
 
-    it('should return empty jQuery object when index is out of bounds', () => {
+    it('should return empty Dom object when index is out of bounds', () => {
         const children = $('.child');
         const nonExistent = children.eq(10);
-
         expect(nonExistent instanceof $).toBe(true);
-        expect(nonExistent).toBe(children);
+        expect(nonExistent.length).toBe(0);
     });
 
     it('should return this when index is undefined or null', () => {
@@ -149,7 +148,7 @@ describe('is()', () => {
         expect($('#first-child').is('#non-existent')).toBe(false);
     });
 
-    it('should check if elements match another jQuery object', () => {
+    it('should check if elements match another Dom object', () => {
         expect($('#first-child').is($('.child').first())).toBe(true);
         expect($('#first-child').is($('#third-child'))).toBe(false);
     });
@@ -191,13 +190,13 @@ describe('is()', () => {
 });
 
 describe('same()', () => {
-    it('should check if two jQuery objects contain same elements', () => {
+    it('should check if two Dom objects contain same elements', () => {
         expect($('.child').same($('.child'))).toBe(true);
         expect($('.child').same($('#first-child, #second-child, #third-child'))).toBe(true);
         expect($('.child').same($('#first-child, #second-child'))).toBe(false);
     });
 
-    it('should convert DOM elements to jQuery objects', () => {
+    it('should convert DOM elements to Dom objects', () => {
         const elements = document.getElementsByClassName('child');
         expect($('.child').same(elements)).toBe(true);
     });
@@ -228,8 +227,8 @@ describe('odd() and even()', () => {
         const odd = $('.child, .paragraph').odd();
         expect(odd.length).toBe(3);
         expect(odd[0].id).toBe('first-child');
-        expect(odd[1].id).toBe('third-child');
-        expect(odd[2].className).toBe('paragraph');
+        expect(odd[1].id).toBe('p1');        
+        expect(odd[2].id).toBe('third-child');
         expect(odd._prevObj).toBeObject($('.child, .paragraph'));
     });
 
@@ -276,7 +275,7 @@ describe('find()', () => {
         expect(empty.length).toBe(0);
     });
 
-    it('should return passed jQuery object', () => {
+    it('should return passed Dom object', () => {
         const jq = $('<div>');
         expect($('#parent').find(jq)).toBe(jq);
     });
@@ -302,7 +301,7 @@ describe('children()', () => {
         expect(filtered[0].id).toBe('second-child');
     });
 
-    it('should return passed jQuery object', () => {
+    it('should return passed Dom object', () => {
         const jq = $('<div>');
         expect($('#parent').children(jq)).toBe(jq);
     });
@@ -328,12 +327,11 @@ describe('parent()', () => {
     });
 
     it('should return undefined for elements without parent', () => {
-        document.body.innerHTML = '';
         const detached = $('<div>');
         expect(detached.parent()).toBeUndefined();
     });
 
-    it('should return passed jQuery object', () => {
+    it('should return passed Dom object', () => {
         const jq = $('<div>');
         expect($('#first-child').parent(jq)).toBe(jq);
     });
@@ -362,7 +360,7 @@ describe('parents()', () => {
         expect($('#non-existent').parents()).toBeUndefined();
     });
 
-    it('should return passed jQuery object', () => {
+    it('should return passed Dom object', () => {
         const jq = $('<div>');
         expect($('#first-child').parents(jq)).toBe(jq);
     });
@@ -387,7 +385,7 @@ describe('siblings()', () => {
         expect($('#non-existent').siblings()).toBeUndefined();
     });
 
-    it('should return passed jQuery object', () => {
+    it('should return passed Dom object', () => {
         const jq = $('<div>');
         expect($('#first-child').siblings(jq)).toBe(jq);
     });
@@ -457,6 +455,7 @@ describe('prevAll() and nextAll()', () => {
 describe('closest()', () => {
     it('should find closest ancestor matching selector', () => {
         const closest = $('.paragraph').closest('#second-child');
+        console.log($('.paragraph').length);
         expect(closest.length).toBe(1);
         expect(closest[0].id).toBe('second-child');
         expect(closest._prevObj).toBeObject($('.paragraph'));
@@ -481,11 +480,6 @@ describe('closest()', () => {
 
     it('should return undefined for empty collection', () => {
         expect($('#non-existent').closest('#anything')).toBeUndefined();
-    });
-
-    it('should return passed jQuery object', () => {
-        const jq = $('<div>');
-        expect($('#first-child').closest(jq)).toBe(jq);
     });
 });
 

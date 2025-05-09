@@ -52,7 +52,7 @@ $.init = function(sel, ctx){
     }
 
     if (sel === "#" || sel === ".") {
-        console.error("Selector can't be # or .") ;
+        // console.error("Selector can't be # or .") ;
         return this;
     }
 

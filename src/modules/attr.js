@@ -33,12 +33,11 @@ $.fn.extend({
     removeAttr: function(name){
         let attributes;
 
-        if (not(name)) {
-            return this.each(function(){
-                const el = this;
-                $.each(this.attributes, function(){
-                    console.log(this.name);
-                    el.removeAttribute(this.name);
+        if (!name) {
+            return this.each(function(_, el){
+                const attributes = $(el).attr();
+                $.each(attributes, function(k){
+                    el.removeAttribute(k);
                 });
             });
         }
