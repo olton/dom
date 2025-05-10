@@ -44,8 +44,25 @@ Data.prototype = {
         return cache;
     },
 
-    get: function(owner, key){
-        return key === undefined ? this.cache(owner) : owner[ this.expando ] && owner[ this.expando ][ camelCase( key ) ];
+    get: function(owner, key){        
+        let value = key === undefined 
+            ? this.cache(owner) 
+            : owner[ this.expando ] && owner[ this.expando ][ camelCase( key ) ];
+        
+        if (key) {
+            return value !== undefined ? value : (owner.getAttribute && owner.getAttribute("data-" + dashedName(key)) || undefined);
+        }
+        
+        value = {...owner[ this.expando ]}
+
+        for (const attr of owner.attributes) {
+            if (attr.name.startsWith("data-")) {
+                const name = attr.name.slice(5);
+                value[camelCase(name)] = attr.value;
+            }
+        }
+
+        return isEmptyObject(value) ? undefined : value;
     },
 
     access: function(owner, key, value){
@@ -57,23 +74,15 @@ Data.prototype = {
     },
 
     remove: function(owner, key){
-        let i, cache = owner[this.expando];
+        let cache = owner[this.expando];
         if (cache === undefined) {
             return ;
         }
         if (key !== undefined) {
-            if ( Array.isArray( key ) ) {
-                key = key.map( camelCase );
-            } else {
-                key = camelCase( key );
-
-                key = key in cache ? [ key ] : ( key.match( /[^\x20\t\r\n\f]+/g ) || [] ); // ???
-            }
-
-            i = key.length;
-
-            while ( i-- ) {
-                delete cache[ key[ i ] ];
+            const _keys = Array.isArray( key ) ? key : [ key ];
+            for (const k of _keys) {
+                delete cache[ camelCase( k ) ];
+                owner.removeAttribute && owner.removeAttribute("data-" + k);
             }
         }
         if ( key === undefined || isEmptyObject( cache ) ) {
@@ -118,7 +127,7 @@ $.extend({
 
 $.fn.extend({
     data: function(key, val){
-        let res, elem, data, attrs, name, i;
+        let res, elem, data
 
         if (this.length === 0) {
             return ;
@@ -127,20 +136,15 @@ $.fn.extend({
         elem = this[0];
 
         if ( arguments.length === 0 ) {
-            if ( this.length ) {
+            if ( elem ) {
                 data = dataSet.get( elem );
 
                 if ( elem.nodeType === 1) {
-                    attrs = elem.attributes;
-                    i = attrs.length;
-                    while ( i-- ) {
-                        if ( attrs[ i ] ) {
-                            name = attrs[ i ].name;
-                            if ( name.indexOf( "data-" ) === 0 ) {
-                                name = camelCase( name.slice( 5 ) );
-                                dataAttr( elem, name, data[ name ] );
-                            }
-                        }
+                    for (const a of elem.attributes) {
+                        if (a.name.startsWith("data-")) {
+                            const name = a.name.slice(5);
+                            data[camelCase(name)] = a.value;
+                        }   
                     }
                 }
             }
@@ -148,16 +152,9 @@ $.fn.extend({
             return data;
         }
 
-        if ( arguments.length === 1 ) {
+        if ( arguments.length === 1 && (typeof key === "string" || Array.isArray( key )) ) {
             res = dataSet.get(elem, key);
-            if (res === undefined) {
-                if ( elem.nodeType === 1) {
-                    if (elem.hasAttribute("data-"+key)) {
-                        res = elem.getAttribute("data-"+key);
-                    }
-                }
-            }
-            return res;
+            return safeJsonParse(res);
         }
 
         return this.each( function() {
@@ -166,8 +163,14 @@ $.fn.extend({
     },
 
     removeData: function( key ) {
+        if (typeof key === "undefined") {
+            return this
+        } 
         return this.each( function() {
-            dataSet.remove( this, key );
+            const keys = Array.isArray( key ) ? key : key.split(" ").map( el => el.trim() ).filter( el => el !== "" );
+            for (const k of keys) {
+                dataSet.remove( this, k );
+            }            
         } );
     },
 

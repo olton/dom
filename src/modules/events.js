@@ -80,15 +80,16 @@ $.extend({
     },
 
     addEventHook: function(event, handler, type = "before"){
-        $.each(str2arr(event), function(){
-            this.eventHooks[camelCase(type+"-"+this)] = handler;
+        $.each(str2arr(event), (_, eventName) => {
+            const key = camelCase(`${type}-${eventName}`);
+            this.eventHooks[key] = handler;
         });
         return this;
     },
 
     removeEventHook: function(event, type = "before"){
-        $.each(str2arr(event), function(){
-            delete this.eventHooks[camelCase(type+"-"+this)];
+        $.each(str2arr(event), (_, eventName) => {
+            delete this.eventHooks[camelCase(`${type}-${eventName}`)];
         });
         return this;
     },
@@ -114,19 +115,18 @@ $.fn.extend({
         }
 
         if (typeof sel === 'function') {
-            options = handler;
+            options = handler || {};
             handler = sel;
             sel = undefined;
         }
 
-        if (!isPlainObject(options)) {
+        if (typeof options !== "object") {
             options = {};
         }
 
-        return this.each(function(){
-            const el = this;
-            $.each(str2arr(eventsList), function(){
-                let h, ev = this,
+        return this.each(function(_, el){
+            $.each(str2arr(eventsList), (_, ev) => {
+                let h,
                     event = ev.split("."),
                     name = normName(event[0]),
                     ns = options.ns ? options.ns : event[1],
@@ -134,7 +134,7 @@ $.fn.extend({
 
                 $.eventUID++;
 
-                h = function(e){
+                h = (e) => {
                     let target = e.target;
                     const beforeHook = $.eventHooks[camelCase("before-"+name)];
                     const afterHook = $.eventHooks[camelCase("after-"+name)];
@@ -190,13 +190,13 @@ $.fn.extend({
         });
     },
 
-    one: function(events, sel, handler, options){
-        if (!isPlainObject(options)) {
-            options = {};
+    one: function(events, sel, handler, options  = {}){
+        if (typeof sel === 'function') {
+            options = handler || {};
+            handler = sel;
+            sel = undefined;
         }
-
         options.once = true;
-
         return this.on.apply(this, [events, sel, handler, options]);
     },
 

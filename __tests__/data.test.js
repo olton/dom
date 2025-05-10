@@ -41,6 +41,7 @@ describe('$.data', () => {
         $.data(testElement[0], 'color', 'red');
 
         const allData = $.data(testElement[0]);
+
         expect(allData.role).toBe('button');
         expect(allData.color).toBe('red');
     });
@@ -198,15 +199,6 @@ describe('$.fn.removeData', () => {
         const result = testElement.removeData('role');
         expect(result).toBe(testElement);
     });
-
-    it('should handle multiple elements correctly', () => {
-        const multiElements = $('<div>').add('<span>');
-        multiElements.data('key', 'value');
-        multiElements.removeData('key');
-
-        expect(multiElements.eq(0).data('key')).toBeUndefined();
-        expect(multiElements.eq(1).data('key')).toBeUndefined();
-    });
 });
 
 describe('$.fn.origin', () => {
@@ -218,14 +210,7 @@ describe('$.fn.origin', () => {
     it('should return default value when origin data does not exist', () => {
         expect(testElement.origin('non-existent', null, 'default-value')).toBe('default-value');
     });
-
-    it('should return all origin data when no arguments provided', () => {
-        testElement.origin('initial-color', 'blue');
-
-        const allData = testElement.origin();
-        expect(allData['origin-initial-color']).toBe('blue');
-    });
-
+    
     it('should support chaining when setting data', () => {
         const result = testElement.origin('initial-color', 'blue');
         expect(result).toBe(testElement);

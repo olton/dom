@@ -5,8 +5,8 @@ $.fn.extend({
         if (not(val)) {
 
             const el = this[0];
-
-            if (prop === 'height') {
+            
+            if (prop === 'height') {                
                 return el === window ? window.innerHeight : el === document ? el.body.clientHeight : parseInt(getComputedStyle(el).height);
             }
             if (prop === 'width') {
@@ -17,7 +17,7 @@ $.fn.extend({
         return this.each(function(){
             const el = this;
             if (el === window || el === document) {return ;}
-            el.style[prop] = isNaN(val) ? val : val + 'px';
+            el.style[prop] = isNaN(val) ? val : +val === 0 ? 0 : val + 'px';
         });
     },
 

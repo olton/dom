@@ -28,12 +28,27 @@ $.init = function(sel, ctx){
         return this;
     }
 
-    if (sel === "window") sel = window;
-    if (sel === "document") sel = document;
-    if (sel === "body") sel = document.body;
-    if (sel === "html") sel = document.documentElement;
-    if (sel === "doctype") sel = document.doctype;
-    if (sel && (sel.nodeType || sel.self === window)) {
+    if (sel === "window" || sel === window) {
+        this.push(window);
+        return this;
+    }
+    if (sel === "document" || sel === document) {
+        this.push(document);
+        return this;
+    }
+    if (sel === "body" || sel === document.body) {
+        this.push(document.body);
+        return this;
+    }
+    if (sel === "html" || sel === document.documentElement) {
+        this.push(document.documentElement);
+        return this;
+    }
+    if (sel === "doctype" || sel === document.doctype) {
+        this.push(document.doctype);
+        return this;
+    }
+    if (sel && sel.nodeType) {
         this.push(sel);
         return this;
     }
@@ -57,31 +72,17 @@ $.init = function(sel, ctx){
     }
 
     if (sel[0] === "@") {
-
         $("[data-role]").each(function(){
             const roles = str2arr($(this).attr("data-role"), ",");
             if (roles.indexOf(sel.slice(1)) > -1) {
                 that.push(this);
             }
         });
-
     } else {
-
         parsed = $.parseHTML(sel);
-
-        if (parsed.length === 1 && parsed[0].nodeType === 3) { // Must be a text node -> css sel
-            try {
-                [].push.apply(this, document.querySelectorAll(sel));
-            } catch (e) {
-                //console.error(sel + " is not a valid selector");
-            }
-        } else {
-            console.log("Selector", parsed.length);
-            // $.merge(this, parsed);
-            for (let i = 0; i < parsed.length; i++) {
-                if (parsed[i].nodeType === 1) {
-                    this.push(parsed[i]);
-                }
+        for (let i = 0; i < parsed.length; i++) {
+            if (parsed[i].nodeType === 1) {
+                this.push(parsed[i]);
             }
         }
     }

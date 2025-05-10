@@ -4,7 +4,7 @@ $.fn.extend({
         let el
 
         function _getStyle(el, prop, pseudo){
-            return ["scrollLeft", "scrollTop"].indexOf(prop) > -1 ? $(el)[prop]() : getComputedStyle(el, pseudo)[prop];
+            return ["scrollLeft", "scrollTop"].includes(prop) ? $(el)[prop]() : getComputedStyle(el, pseudo)[prop];
         }
 
         if (typeof name === 'string' && this.length === 0) {
@@ -17,10 +17,11 @@ $.fn.extend({
 
         el = this[0];
 
-        if (not(name) || name === "all") {
+        if (!name || name === "all") {
             return getComputedStyle(el, pseudo);
         } else {
-            let result = {}, names = name.split(", ").map(function(el){
+            let result = {} 
+            let names = name.split(", ").map(function(el){
                 return (""+camelCase(el)).trim();
             });
             if (names.length === 1)  {

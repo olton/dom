@@ -70,8 +70,7 @@ $.fn.extend({
     appendTo: function(elements){
         const _elements = normalizeElements(elements);
 
-        return this.each(function(){
-            const el = this;
+        return this.each(function(_, el){
             $.each(_elements, function(parIndex, parent){
                 if (el === this) return ;
                 parent.append(parIndex === 0 ? el : el.cloneNode(true));
@@ -156,14 +155,9 @@ $.fn.extend({
         });
     },
 
-    clone: function(deep, withData){
+    clone: function(deep = false, withData = false){
         const res = [];
-        if (not(deep)) {
-            deep = false;
-        }
-        if (not(withData)) {
-            withData = false;
-        }
+
         this.each(function(){
             const el = this.cloneNode(deep);
             const $el = $(el);
@@ -176,6 +170,7 @@ $.fn.extend({
             }
             res.push(el);
         });
+
         return $.merge($(), res);
     },
 

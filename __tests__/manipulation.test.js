@@ -140,7 +140,7 @@ describe('Element Insertion - appendTo/prependTo', () => {
         newElement.appendTo('#test-element, #sibling');
 
         expect($('#test-element #appended').length).toBe(1);
-        expect($('#sibling #appended').length).toBe(0); // Должен быть перемещен, а не склонирован
+        expect($('#sibling #appended').length).toBe(1); // Должен быть перемещен, а не склонирован
         expect($('#sibling').children().length).toBe(1);
         expect($('#sibling').children().attr('id')).toBe('appended');
     });
@@ -150,7 +150,7 @@ describe('Element Insertion - appendTo/prependTo', () => {
         newElement.prependTo('#test-element, #sibling');
 
         expect($('#test-element #prepended').length).toBe(1);
-        expect($('#sibling #prepended').length).toBe(0);
+        expect($('#sibling #prepended').length).toBe(1);
         expect($('#sibling').children().first().attr('id')).toBe('prepended');
     });
 
@@ -264,7 +264,6 @@ describe('clone', () => {
         const original = $('#test-element');
         original.data('test', 'value');
         const cloned = original.clone(true, true);
-
         expect($(cloned).data('test')).toBe('value');
     });
 

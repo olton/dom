@@ -73,11 +73,11 @@ $.extend({
             typeof selector !== 'string' 
             || selector.length === 0 
             || selector === '#' 
-            || selector === '.') 
-        {
+            || selector === '.'
+        ) {
             return false;
         }
-        
+
         try {
             document.querySelector(selector);
             return true;

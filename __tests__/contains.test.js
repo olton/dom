@@ -387,7 +387,6 @@ describe('siblings()', () => {
 
     it('should return passed Dom object', () => {
         const div = $('<div>');
-        console.log(div);
         expect($('#first-child').siblings(div)).toBe(div);
     });
 });
@@ -456,7 +455,6 @@ describe('prevAll() and nextAll()', () => {
 describe('closest()', () => {
     it('should find closest ancestor matching selector', () => {
         const closest = $('.paragraph').closest('#second-child');
-        console.log($('.paragraph').length);
         expect(closest.length).toBe(1);
         expect(closest[0].id).toBe('second-child');
         expect(closest._prevObj).toBeObject($('.paragraph'));

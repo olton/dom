@@ -10,9 +10,8 @@ $.fn.extend({
         }
 
         return this.each(function(){
+            let {top, left} = val;
             let el = $(this),
-                top = val.top,
-                left = val.left,
                 position = getComputedStyle(this).position;
 
             // Получаем текущие координаты без рекурсивного вызова
@@ -31,10 +30,8 @@ $.fn.extend({
                 left = left - currentOffset.left;
             }
 
-            el.css({
-                top: top,
-                left: left
-            });
+            if (top) el.css("top", top);
+            if (left) el.css("left", left);
         });
     },
 
@@ -49,8 +46,8 @@ $.fn.extend({
         style = getComputedStyle(el);
 
         if (margin) {
-            ml = parseInt(style['margin-left']);
-            mt = parseInt(style['margin-top']);
+            ml = parseInt(style['marginLeft']);
+            mt = parseInt(style['marginTop']);
         }
 
         return {
@@ -75,7 +72,7 @@ $.fn.extend({
         });
     },
 
-    top: function(val, margin){
+    top: function(val, margin = false){
         if (this.length === 0) return ;
         if (not(val)) {
             return this.position(margin).top;
@@ -97,7 +94,7 @@ $.fn.extend({
 
     pos: function(){
         if (this.length === 0) return ;
-        const el = this[0];
+        const el = $(this[0]);
         return {
             top: parseInt(el.style("top")),
             left: parseInt(el.style("left"))
