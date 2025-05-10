@@ -2,7 +2,7 @@
   "name": "@olton/dom",
   "title": "Dom",
   "description": "DOM - Work with HTML elements, animation HTML elements and props, and ajax routines. JQuery replacer.",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "main": "dist/dom.js",
   "type": "module",
   "types": "types/dom.d.ts",
