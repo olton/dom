@@ -283,7 +283,7 @@ describe('Event Hooks', () => {
 describe('Event Shortcuts', () => {
     it('should provide shortcut methods for standard events', () => {
         const handler = mock(() => {
-            console.log("Elements clicked");
+            // console.log("Elements clicked");
         });
 
         testElement[0].onclick = handler;
